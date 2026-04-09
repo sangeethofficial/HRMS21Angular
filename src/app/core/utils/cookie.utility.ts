@@ -6,7 +6,9 @@ export class CookieUtility {
       date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
       expires = "; expires=" + date.toUTCString();
     }
-    document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Lax";
+    const cookieString = name + "=" + (value || "") + expires + "; path=/; SameSite=Lax";
+    console.log('Setting cookie:', cookieString);
+    document.cookie = cookieString;
   }
 
   static getCookie(name: string): string | null {

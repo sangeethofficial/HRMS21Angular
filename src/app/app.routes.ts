@@ -17,6 +17,10 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
+    path: 'debug',
+    loadComponent: () => import('./features/dashboard/dashboard').then(m => m.Dashboard)
+  },
+  {
     path: '**',
     redirectTo: '/login'
   }

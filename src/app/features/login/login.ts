@@ -31,11 +31,10 @@ export class Login {
       
       const loginData = {
         ...this.loginForm.value,
-        isTempUser: true
       };
 
       this.authService.login(loginData).subscribe({
-        next: (response) => {
+        next: (response:any) => {
           this.router.navigate(['/dashboard']); // Navigating to the dashboard after login
         },
         error: (error) => {
