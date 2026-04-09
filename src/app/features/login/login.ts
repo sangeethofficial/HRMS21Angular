@@ -31,12 +31,12 @@ export class Login {
       
       const loginData = {
         ...this.loginForm.value,
-        isTempUser: false
+        isTempUser: true
       };
 
       this.authService.login(loginData).subscribe({
         next: (response) => {
-          this.router.navigate(['/dashboard']); // Navigating to a home page after login
+          this.router.navigate(['/dashboard']); // Navigating to the dashboard after login
         },
         error: (error) => {
           this.errorMessage.set('Invalid credentials. Please try again.');

@@ -13,7 +13,7 @@ export const routes: Routes = [
   },
   { 
     path: 'dashboard', 
-    loadComponent: () => import('./features/dashboard/dashboard').then(m => m.Dashboard), // Temporary placeholder
+    loadComponent: () => import('./features/dashboard/dashboard').then(m => m.Dashboard),
     canActivate: [authGuard]
   },
   {
