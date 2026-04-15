@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+
+:root {
+  --app-font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --app-font-size: 14px;
+}
+
+html {
+  font-size: var(--app-font-size);
+}
+
+body {
+  margin: 0;
+  font-family: var(--app-font-family);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}

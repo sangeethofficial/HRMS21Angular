@@ -1,0 +1,255 @@
+.ud {
+  padding: 0;
+}
+
+.ud-tabs {
+  display: flex;
+  gap: 1.5rem;
+  border-bottom: 1px solid #eaeaea;
+  margin-bottom: 1.5rem;
+}
+
+.ud-tabs button {
+  background: none;
+  border: none;
+  padding: 0.5rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -1px;
+}
+
+.ud-tabs__btn--active {
+  color: #111;
+  border-bottom-color: #ff8c42 !important;
+}
+
+.ud-overview {
+  position: relative;
+}
+
+.ud-banner {
+  height: 140px;
+  border-radius: 8px;
+  background: linear-gradient(120deg, #1a2744 0%, #3d5a80 100%);
+  margin-bottom: -3rem;
+}
+
+.ud-profile-row {
+  display: grid;
+  grid-template-columns: minmax(240px, 320px) 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 900px) {
+  .ud-profile-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ud-profile-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1.25rem;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.ud-avatar-wrap {
+  margin-bottom: 0.75rem;
+}
+
+.ud-avatar {
+  width: 88px;
+  height: 88px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.ud-avatar--ph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eaefff;
+  color: #1a2a6c;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.ud-profile-text h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1.25rem;
+}
+
+.ud-code {
+  margin: 0 0 0.5rem;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.ud-hint {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.ud-main-panels {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ud-mini-tabs {
+  display: flex;
+  gap: 1rem;
+}
+
+.ud-mini-tabs button {
+  background: none;
+  border: none;
+  padding: 0.35rem 0;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+.ud-mini-tabs__btn--active {
+  color: #111;
+  border-bottom-color: #ff8c42 !important;
+}
+
+.ud-greeting {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #fff;
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+}
+
+.ud-greeting__logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #1a2a6c, #ff8c42);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+
+.ud-greeting__line {
+  margin: 0;
+  font-weight: 700;
+}
+
+.ud-greeting__sub {
+  margin: 0.15rem 0 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.ud-greeting__sun {
+  margin-left: auto;
+  font-size: 1.5rem;
+}
+
+.ud-panel {
+  background: #fff;
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.ud-panel__empty {
+  text-align: center;
+  color: #666;
+}
+
+.ud-panel__empty p {
+  margin: 0.35rem 0;
+}
+
+.ud-panel__ic {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.ud-panel__err {
+  font-size: 0.85rem;
+  color: #999;
+}
+
+.ud-timelog {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #fff;
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  padding: 0.85rem 1.25rem;
+}
+
+.ud-timelog p {
+  margin: 0;
+  flex: 1;
+  font-weight: 600;
+}
+
+.ud-timelog__btn {
+  border: 1px solid #ff8c42;
+  background: #fff;
+  color: #ff8c42;
+  font-weight: 700;
+  padding: 0.4rem 1.25rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.ud-placeholder {
+  padding: 2rem;
+  background: #fafafa;
+  border-radius: 8px;
+  color: #666;
+  text-align: center;
+}
+
+.ud-skel {
+  border-radius: 8px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: ud-shimmer 1.2s ease-in-out infinite;
+}
+
+.ud-skel--avatar {
+  width: 88px;
+  height: 88px;
+  margin-bottom: 0.75rem;
+}
+
+.ud-skel--line {
+  height: 1.25rem;
+  width: 70%;
+}
+
+@keyframes ud-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

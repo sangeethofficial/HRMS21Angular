@@ -1,0 +1,95 @@
+<section class="ud">
+  <nav class="ud-tabs" aria-label="Home sections">
+    <button type="button" [class.ud-tabs__btn--active]="tab === 'overview'" (click)="tab = 'overview'">
+      Overview
+    </button>
+    <button type="button" [class.ud-tabs__btn--active]="tab === 'whatsnew'" (click)="tab = 'whatsnew'">
+      What's New
+    </button>
+    <button
+      type="button"
+      [class.ud-tabs__btn--active]="tab === 'notifications'"
+      (click)="tab = 'notifications'"
+    >
+      Notifications
+    </button>
+  </nav>
+
+  @if (tab === 'overview') {
+    <div class="ud-overview">
+      <div class="ud-banner"></div>
+
+      <div class="ud-profile-row">
+        <article class="ud-profile-card">
+          @if (loading) {
+            <div class="ud-skel ud-skel--avatar"></div>
+            <div class="ud-skel ud-skel--line"></div>
+          } @else {
+            <div class="ud-avatar-wrap">
+              @if (avatarUrl()) {
+                <img [src]="avatarUrl()!" [alt]="displayName()" class="ud-avatar" />
+              } @else {
+                <div class="ud-avatar ud-avatar--ph">{{ displayName().charAt(0) }}</div>
+              }
+            </div>
+            <div class="ud-profile-text">
+              <h2>{{ displayName() }}</h2>
+              <p class="ud-code">{{ employeeCode() }}</p>
+              <p class="ud-hint">Attendance tracking is not applicable for your role 📊</p>
+            </div>
+          }
+        </article>
+
+        <div class="ud-main-panels">
+          <div class="ud-mini-tabs">
+            <button
+              type="button"
+              [class.ud-mini-tabs__btn--active]="innerTab === 'activities'"
+              (click)="innerTab = 'activities'"
+            >
+              Activities
+            </button>
+            <button
+              type="button"
+              [class.ud-mini-tabs__btn--active]="innerTab === 'announcement'"
+              (click)="innerTab = 'announcement'"
+            >
+              Announcement
+            </button>
+          </div>
+
+          <div class="ud-greeting">
+            <div class="ud-greeting__logo">K</div>
+            <div class="ud-greeting__text">
+              <p class="ud-greeting__line">Good day {{ displayName() }}</p>
+              <p class="ud-greeting__sub">Have a productive day!</p>
+            </div>
+            <div class="ud-greeting__sun" aria-hidden="true">☀️</div>
+          </div>
+
+          <div class="ud-panel">
+            <div class="ud-panel__empty">
+              <span class="ud-panel__ic" aria-hidden="true">📥</span>
+              <p>No Work Schedule Available</p>
+              <p class="ud-panel__err">There was an error fetching your schedule. Please try again later.</p>
+            </div>
+          </div>
+
+          <div class="ud-timelog">
+            <span class="ud-timelog__ic" aria-hidden="true">⏱️</span>
+            <p>Time Log Update Needed for Today</p>
+            <button type="button" class="ud-timelog__btn">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  } @else if (tab === 'whatsnew') {
+    <div class="ud-placeholder">
+      <p>What's New will appear here when your team publishes updates.</p>
+    </div>
+  } @else {
+    <div class="ud-placeholder">
+      <p>No notifications to show.</p>
+    </div>
+  }
+</section>

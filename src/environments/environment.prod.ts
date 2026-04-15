@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl:  'https://portalapi.kryptosinfosys.com/api'
+  apiBaseUrl: 'https://portalapi.kryptosinfosys.com/api',
 };

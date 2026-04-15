@@ -1,0 +1,138 @@
+<section class="sa-dash">
+  <header class="sa-dash__head">
+    <div class="sa-dash__titles">
+      <h1>Dashboard</h1>
+      <p>Monitor and manage your entire platform.</p>
+    </div>
+    <div class="sa-dash__filters">
+      <label class="sa-field">
+        <span class="sa-field__lbl">Year</span>
+        <select
+          class="sa-select"
+          [value]="selectedYear"
+          (change)="onYearChange($event)"
+          [disabled]="loading"
+        >
+          @for (y of yearOptions; track y) {
+            <option [value]="y">{{ y }}</option>
+          }
+        </select>
+      </label>
+      <label class="sa-field">
+        <span class="sa-field__lbl">Compare with:</span>
+        <select
+          class="sa-select"
+          [value]="compareWith"
+          (change)="onCompareChange($event)"
+          [disabled]="loading"
+        >
+          @for (opt of compareOptions; track opt.value) {
+            <option [value]="opt.value">{{ opt.label }}</option>
+          }
+        </select>
+      </label>
+      <div class="sa-updated">
+        <span class="sa-updated__ic" aria-hidden="true">🕐</span>
+        <span>Last updated: {{ lastUpdatedDisplay() }}</span>
+      </div>
+    </div>
+  </header>
+
+  @if (loading) {
+    <div class="sa-grid sa-grid--loading">
+      @for (i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]; track i) {
+        <div class="sa-kpi sa-kpi--skeleton"></div>
+      }
+    </div>
+  } @else if (vm) {
+    <div class="sa-grid">
+      @for (k of vm.kpis; track k.id) {
+        <article class="sa-kpi">
+          <div [class]="iconClass(k.icon)" aria-hidden="true"></div>
+          <div class="sa-kpi__body">
+            <h3 class="sa-kpi__title">{{ k.title }}</h3>
+            <p class="sa-kpi__value">{{ k.value }}</p>
+            <p class="sa-kpi__sub">{{ k.sublabel }}</p>
+          </div>
+        </article>
+      }
+    </div>
+
+    <div class="sa-charts">
+      <div class="sa-chart-card">
+        <div class="sa-chart-card__head">
+          <h2>Contract Types</h2>
+          <p>Total Employees: {{ contractTotal() || '—' }}</p>
+        </div>
+        <div class="sa-chart-card__canvas">
+          @if (vm.contractTypes.length && contractTotal() > 0) {
+            <canvas #contractCanvas></canvas>
+          } @else {
+            <p class="sa-chart-card__empty">No contract type data.</p>
+          }
+        </div>
+      </div>
+
+      <div class="sa-chart-card">
+        <div class="sa-chart-card__head">
+          <h2>Interactive Metrics</h2>
+          <p>Metrics for {{ selectedYear }}</p>
+        </div>
+        <div class="sa-chart-card__canvas">
+          @if (vm.interactiveMetrics.length) {
+            <canvas #metricsCanvas></canvas>
+          } @else {
+            <p class="sa-chart-card__empty">No hiring metrics for this period.</p>
+          }
+        </div>
+      </div>
+
+      <div class="sa-chart-card sa-chart-card--wide">
+        <div class="sa-chart-card__head">
+          <h2>Company Growth (Headcount Trend)</h2>
+          <p>Monthly headcount growth</p>
+        </div>
+        <div class="sa-chart-card__canvas sa-chart-card__canvas--tall">
+          @if (vm.headcountTrend.length) {
+            <canvas #headcountCanvas></canvas>
+          } @else {
+            <p class="sa-chart-card__empty">No headcount trend data.</p>
+          }
+        </div>
+      </div>
+
+      <div class="sa-chart-card sa-chart-card--wide">
+        <div class="sa-chart-card__head">
+          <h2>Billable vs Non-Billable Resources</h2>
+          <p>Monthly billable vs non-billable workforce distribution.</p>
+        </div>
+        <div class="sa-chart-card__canvas">
+          @if (vm.billableStack.length) {
+            <canvas #billableCanvas></canvas>
+          } @else {
+            <p class="sa-chart-card__empty">No billable / non-billable breakdown.</p>
+          }
+        </div>
+      </div>
+
+      <div class="sa-chart-card sa-chart-card--wide">
+        <div class="sa-chart-card__head">
+          <h2>Department-Wise Gender Distribution</h2>
+          <p>Compare male vs female headcount by department.</p>
+        </div>
+        <div class="sa-chart-card__canvas">
+          @if (vm.deptGender.length) {
+            <canvas #deptGenderCanvas></canvas>
+          } @else {
+            <p class="sa-chart-card__empty">No department gender data.</p>
+          }
+        </div>
+      </div>
+    </div>
+  } @else {
+    <p class="sa-dash__err">
+      Dashboard data could not be loaded. Verify that <code>/api/Dashboard</code> is reachable and your account is
+      authorized.
+    </p>
+  }
+</section>
