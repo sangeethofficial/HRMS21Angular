@@ -35,6 +35,32 @@ function decodeJwtPayload(token: string): Record<string, unknown> | null {
   }
 }
 
+function toNumberId(value: unknown): number {
+  if (typeof value === 'number' && !Number.isNaN(value)) return value;
+  if (typeof value === 'string' && value.trim() !== '' && !Number.isNaN(Number(value))) {
+    return Number(value);
+  }
+  return 0;
+}
+
+function userIdFromClaims(claims: Record<string, unknown>): number {
+  const claimKeys = [
+    'sub',
+    'userId',
+    'user_id',
+    'nameid',
+    'name_id',
+    'id',
+    'uid',
+    'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier',
+  ];
+  for (const key of claimKeys) {
+    const id = toNumberId(claims[key]);
+    if (id > 0) return id;
+  }
+  return 0;
+}
+
 function extractSessionFromLoginResponse(response: unknown, token: string | null): HrmsSession {
   const root = response && typeof response === 'object' ? (response as Record<string, unknown>) : {};
   const data =
@@ -49,15 +75,7 @@ function extractSessionFromLoginResponse(response: unknown, token: string | null
     const claims = decodeJwtPayload(token);
     if (claims) {
       if (!userId) {
-        const sub =
-          claims['sub'] ??
-          claims['userId'] ??
-          claims['user_id'] ??
-          claims['nameid'];
-        if (typeof sub === 'string' || typeof sub === 'number') {
-          const n = Number(sub);
-          if (!Number.isNaN(n)) userId = n;
-        }
+        userId = userIdFromClaims(claims);
       }
       if (!role) {
         const cr =
@@ -175,10 +193,7 @@ export class AuthService {
     const claims = decodeJwtPayload(token);
     if (!claims) return;
 
-    let userId = 0;
-    const sub = claims['sub'] ?? claims['userId'] ?? claims['name_id'] ?? claims['nameid'];
-    if (typeof sub === 'number' && !Number.isNaN(sub)) userId = sub;
-    else if (typeof sub === 'string' && !Number.isNaN(Number(sub))) userId = Number(sub);
+    const userId = userIdFromClaims(claims);
 
     let role = '';
     const cr =
@@ -213,8 +228,16 @@ export class AuthService {
   }
 
   getCurrentUserId(): number | null {
-    const id = this.getSession()?.userId;
+    const id = this.getSession()?.userId ?? this.getUserIdFromToken();
     return id && id > 0 ? id : null;
+  }
+
+  private getUserIdFromToken(): number {
+    const token = this.getToken();
+    if (!token) return 0;
+    const claims = decodeJwtPayload(token);
+    if (!claims) return 0;
+    return userIdFromClaims(claims);
   }
 
   isSuperAdmin(): boolean {

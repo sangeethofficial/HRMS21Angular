@@ -61,8 +61,28 @@ export class DashboardService {
 
   getViewUserPersonalInfo(userId: number): Observable<UserPersonalInfo> {
     const url = `${apiBase()}/user-management/view-user-personal-info/${userId}`;
-    return this.http.get<UserPersonalInfo>(url);
+    return this.http.get<unknown>(url).pipe(map((res) => mapUserPersonalInfo(res)));
   }
+}
+
+function mapUserPersonalInfo(res: unknown): UserPersonalInfo {
+  const r = unwrap(res);
+  return {
+    ...r,
+    employeeName: str(r, ['employeeName', 'userName', 'fullName', 'name'], ''),
+    employeeCode: str(r, ['employeeCode', 'empCode'], ''),
+    profileImage: str(r, ['profileImage', 'profileImageUrl', 'photoUrl'], ''),
+    profileImageUrl: str(r, ['profileImageUrl', 'profileImage', 'photoUrl'], ''),
+    email: str(r, ['email'], ''),
+    role: str(r, ['role'], ''),
+    designation: str(r, ['designation'], ''),
+    department: str(r, ['department'], ''),
+    companyName: str(r, ['companyName'], ''),
+    branch: str(r, ['branch'], ''),
+    team: str(r, ['team'], ''),
+    gradeCode: str(r, ['gradeCode'], ''),
+    gradeName: str(r, ['gradeName'], ''),
+  };
 }
 
 function mapDashboardResponse(res: unknown): SuperadminDashboardView {

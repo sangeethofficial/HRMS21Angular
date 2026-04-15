@@ -1,0 +1,44 @@
+@if (mobileOpen) {
+  <button class="snav__overlay" type="button" (click)="closeMobile()" aria-label="Close menu"></button>
+}
+
+<aside class="snav" [class.snav--open]="mobileOpen">
+  <div class="snav__brand">
+    <span class="snav__brand-k">Kryptos</span>
+    <span class="snav__brand-i">Info Sys</span>
+  </div>
+
+  <nav class="snav__menu">
+    @for (item of menuItems; track item.id) {
+      <div class="snav__group">
+        <button
+          class="snav__item"
+          type="button"
+          [class.snav__item--active]="isItemActive(item)"
+          (click)="onItemClick(item)"
+        >
+          <span class="snav__icon" aria-hidden="true">{{ item.icon }}</span>
+          <span class="snav__label">{{ item.label }}</span>
+          @if (item.children?.length) {
+            <span class="snav__chev" [class.snav__chev--open]="isExpanded(item.id)">▾</span>
+          }
+        </button>
+
+        @if (item.children?.length && isExpanded(item.id)) {
+          <div class="snav__sublist">
+            @for (child of item.children; track child) {
+              <button
+                class="snav__subitem"
+                type="button"
+                [class.snav__subitem--active]="isSubItemActive(child.routePath)"
+                (click)="onSubItemClick(child.routePath)"
+              >
+                {{ child.label }}
+              </button>
+            }
+          </div>
+        }
+      </div>
+    }
+  </nav>
+</aside>

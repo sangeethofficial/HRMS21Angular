@@ -36,6 +36,40 @@
               <h2>{{ displayName() }}</h2>
               <p class="ud-code">{{ employeeCode() }}</p>
               <p class="ud-hint">Attendance tracking is not applicable for your role 📊</p>
+              <dl class="ud-details">
+                <div class="ud-details__row">
+                  <dt>Email</dt>
+                  <dd>{{ profileDetail('Email') }}</dd>
+                </div>
+                <div class="ud-details__row">
+                  <dt>Role</dt>
+                  <dd>{{ profileDetail('Role') }}</dd>
+                </div>
+                <div class="ud-details__row">
+                  <dt>Designation</dt>
+                  <dd>{{ profileDetail('Designation') }}</dd>
+                </div>
+                <div class="ud-details__row">
+                  <dt>Department</dt>
+                  <dd>{{ profileDetail('Department') }}</dd>
+                </div>
+                <div class="ud-details__row">
+                  <dt>Company</dt>
+                  <dd>{{ profileDetail('Company') }}</dd>
+                </div>
+                <div class="ud-details__row">
+                  <dt>Branch</dt>
+                  <dd>{{ profileDetail('Branch') }}</dd>
+                </div>
+                <div class="ud-details__row">
+                  <dt>Team</dt>
+                  <dd>{{ profileDetail('Team') }}</dd>
+                </div>
+                <div class="ud-details__row">
+                  <dt>Grade</dt>
+                  <dd>{{ profileDetail('Grade') }}</dd>
+                </div>
+              </dl>
             </div>
           }
         </article>

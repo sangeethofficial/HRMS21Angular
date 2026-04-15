@@ -1,0 +1,136 @@
+:host {
+  display: block;
+}
+
+.snav__overlay {
+  display: none;
+}
+
+.snav {
+  background: #0674b7;
+  color: #fff;
+  width: 240px;
+  min-height: 100vh;
+  padding: 1rem 0.5rem;
+  overflow-y: auto;
+}
+
+.snav__brand {
+  padding: 0.25rem 0.6rem 1rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.snav__brand-k {
+  color: #8fd8ff;
+}
+
+.snav__brand-i {
+  color: #ff9c5e;
+  margin-left: 0.2rem;
+}
+
+.snav__menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.snav__item {
+  width: 100%;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.95);
+  border: none;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 0.6rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+.snav__item:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.snav__item--active {
+  background: #ef6e33;
+  color: #fff;
+}
+
+.snav__icon {
+  width: 1.25rem;
+  text-align: center;
+}
+
+.snav__label {
+  flex: 1;
+}
+
+.snav__chev {
+  font-size: 0.8rem;
+  transition: transform 0.18s ease;
+}
+
+.snav__chev--open {
+  transform: rotate(180deg);
+}
+
+.snav__sublist {
+  margin: 0.25rem 0 0.6rem 1.2rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.35);
+  padding-left: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.snav__subitem {
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: left;
+  border-radius: 8px;
+  padding: 0.5rem 0.6rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.snav__subitem:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.snav__subitem--active {
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
+}
+
+@media (max-width: 960px) {
+  .snav__overlay {
+    position: fixed;
+    inset: 0;
+    border: none;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 39;
+    display: block;
+  }
+
+  .snav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 40;
+    transform: translateX(-100%);
+    transition: transform 0.22s ease;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.28);
+  }
+
+  .snav.snav--open {
+    transform: translateX(0);
+  }
+}

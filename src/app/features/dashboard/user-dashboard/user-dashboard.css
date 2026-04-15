@@ -98,6 +98,32 @@
   color: #555;
 }
 
+.ud-details {
+  margin: 0.85rem 0 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.ud-details__row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 0.5rem;
+  align-items: baseline;
+}
+
+.ud-details dt {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.ud-details dd {
+  margin: 0;
+  color: #111827;
+  font-size: 0.85rem;
+}
+
 .ud-main-panels {
   display: flex;
   flex-direction: column;

@@ -1,5 +1,5 @@
 import { Component, inject, signal, OnInit, computed } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -8,11 +8,12 @@ import { DashboardService } from '../../core/services/dashboard.service';
 import { SuperadminDashboardComponent } from './superadmin-dashboard/superadmin-dashboard';
 import type { SuperadminDashboardView, UserPersonalInfo } from '../../core/models/dashboard.models';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard';
+import { DashboardSidebarComponent } from './sidebar/sidebar';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, SuperadminDashboardComponent, UserDashboardComponent],
+  imports: [CommonModule, RouterOutlet, DashboardSidebarComponent, SuperadminDashboardComponent, UserDashboardComponent],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css'],
 })
@@ -26,13 +27,14 @@ export class Dashboard implements OnInit {
   loading = signal(true);
   superVm = signal<SuperadminDashboardView | null>(null);
   profile = signal<UserPersonalInfo | null>(null);
+  mobileSidebarOpen = false;
 
   isSuperAdmin = signal(false);
 
   displayName = computed(() => {
     const p = this.profile();
     if (p) {
-      const n = (p['employeeName'] ?? p['fullName'] ?? p['name']) as string | undefined;
+      const n = (p['employeeName'] ?? p['userName'] ?? p['fullName'] ?? p['name']) as string | undefined;
       if (n) return String(n);
     }
     return 'User';
@@ -45,6 +47,19 @@ export class Dashboard implements OnInit {
       if (c) return String(c);
     }
     return '—';
+  });
+
+  profileImageUrl = computed(() => {
+    const p = this.profile();
+    const raw = (p?.['profileImage'] ?? p?.['profileImageUrl'] ?? p?.['photoUrl']) as
+      | string
+      | undefined;
+    if (!raw) return null;
+    try {
+      return encodeURI(String(raw));
+    } catch {
+      return String(raw);
+    }
   });
 
   notificationCount = computed(() => {
@@ -93,6 +108,14 @@ export class Dashboard implements OnInit {
   onCompareChange(v: string): void {
     this.compareWith.set(v);
     this.load();
+  }
+
+  hasSubmenuRoute(): boolean {
+    return this.router.url.startsWith('/dashboard/');
+  }
+
+  toggleMobileSidebar(): void {
+    this.mobileSidebarOpen = !this.mobileSidebarOpen;
   }
 
   logout(): void {

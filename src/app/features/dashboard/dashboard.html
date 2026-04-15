@@ -1,47 +1,11 @@
 <div class="shell">
-  <aside class="shell__sidebar">
-    <div class="shell__brand">
-      <span class="shell__brand-k">Kryptos</span>
-      <span class="shell__brand-i">Info Sys</span>
-    </div>
-    <nav class="shell__nav">
-      <a class="shell__nav-item shell__nav-item--active" href="#" (click)="$event.preventDefault()">
-        <span class="shell__nav-ic" aria-hidden="true">▦</span>
-        Dashboard
-      </a>
-      <a class="shell__nav-item" href="#" (click)="$event.preventDefault()">
-        <span class="shell__nav-ic" aria-hidden="true">⌂</span>
-        Home
-      </a>
-      <a class="shell__nav-item" href="#" (click)="$event.preventDefault()">
-        <span class="shell__nav-ic" aria-hidden="true">📣</span>
-        Announcement
-      </a>
-      <a class="shell__nav-item" href="#" (click)="$event.preventDefault()">
-        <span class="shell__nav-ic" aria-hidden="true">🌴</span>
-        Leave Tracker
-      </a>
-      <a class="shell__nav-item" href="#" (click)="$event.preventDefault()">
-        <span class="shell__nav-ic" aria-hidden="true">👥</span>
-        People
-      </a>
-      <a class="shell__nav-item" href="#" (click)="$event.preventDefault()">
-        <span class="shell__nav-ic" aria-hidden="true">👤</span>
-        Profile
-      </a>
-      <a class="shell__nav-item" href="#" (click)="$event.preventDefault()">
-        <span class="shell__nav-ic" aria-hidden="true">🔍</span>
-        Talent Acquisition
-      </a>
-      <a class="shell__nav-item" href="#" (click)="$event.preventDefault()">
-        <span class="shell__nav-ic" aria-hidden="true">⋯</span>
-        More
-      </a>
-    </nav>
-  </aside>
+  <app-dashboard-sidebar [(mobileOpen)]="mobileSidebarOpen"></app-dashboard-sidebar>
 
   <div class="shell__main">
     <header class="shell__header">
+      <button type="button" class="shell__menu-toggle" (click)="toggleMobileSidebar()" aria-label="Toggle menu">
+        ☰
+      </button>
       <div class="shell__header-spacer"></div>
       <div class="shell__header-actions">
         <button type="button" class="shell__bell" aria-label="Notifications">
@@ -51,7 +15,13 @@
           }
         </button>
         <div class="shell__user">
-          <div class="shell__user-avatar">{{ displayName().charAt(0) }}</div>
+          <div class="shell__user-avatar">
+            @if (profileImageUrl()) {
+              <img [src]="profileImageUrl()!" [alt]="displayName()" class="shell__user-avatar-img" />
+            } @else {
+              {{ displayName().charAt(0) }}
+            }
+          </div>
           <div class="shell__user-text">
             <span class="shell__user-name">{{ displayName() }}</span>
             <span class="shell__user-code">{{ employeeCode() }}</span>
@@ -63,17 +33,21 @@
     </header>
 
     <div class="shell__content">
-      @if (isSuperAdmin()) {
-        <app-superadmin-dashboard
-          [vm]="superVm()"
-          [loading]="loading()"
-          [selectedYear]="year()"
-          [compareWith]="compareWith()"
-          (yearChange)="onYearChange($event)"
-          (compareChange)="onCompareChange($event)"
-        />
+      @if (hasSubmenuRoute()) {
+        <router-outlet></router-outlet>
       } @else {
-        <app-user-dashboard [profile]="profile()" [loading]="loading()" />
+        @if (isSuperAdmin()) {
+          <app-superadmin-dashboard
+            [vm]="superVm()"
+            [loading]="loading()"
+            [selectedYear]="year()"
+            [compareWith]="compareWith()"
+            (yearChange)="onYearChange($event)"
+            (compareChange)="onCompareChange($event)"
+          />
+        } @else {
+          <app-user-dashboard [profile]="profile()" [loading]="loading()" />
+        }
       }
     </div>
   </div>

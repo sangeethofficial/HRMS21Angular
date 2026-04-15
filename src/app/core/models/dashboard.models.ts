@@ -42,7 +42,18 @@ export interface SuperadminDashboardView {
 
 export interface UserPersonalInfo {
   employeeName?: string;
+  userName?: string;
   employeeCode?: string;
+  email?: string;
+  role?: string;
+  designation?: string;
+  department?: string;
+  companyName?: string;
+  branch?: string;
+  team?: string;
+  gradeCode?: string;
+  gradeName?: string;
+  profileImage?: string;
   profileImageUrl?: string;
   [key: string]: unknown;
 }
